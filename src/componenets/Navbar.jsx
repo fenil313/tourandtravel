@@ -1,0 +1,80 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { FaUserCircle, FaChevronDown } from 'react-icons/fa';
+import { useNav } from '../context/NavbarContext';
+import './Navbar.css';
+
+const Navbar = () => {
+  const { isMobileOpen, toggleMobile, menuData } = useNav();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return (
+    <nav className="navbar">
+      <div className="nav-container">
+        
+        {/* --- Logo --- */}
+        <Link to="/" className="logo">Umiya Travels</Link>
+
+        {/* --- Navigation Links --- */}
+        <ul className={`nav-links ${isMobileOpen ? 'active' : ''}`}>
+          {menuData.map((item, index) => (
+            <li key={index} className="nav-item">
+              <div className="link-wrapper">
+                <Link 
+                  to={item.path} 
+                  className="main-link" 
+                  onClick={() => !item.children && isMobileOpen && toggleMobile()}
+                >
+                  {item.title}
+                </Link>
+                {item.children && <FaChevronDown className="arrow-icon" />}
+              </div>
+
+              {/* Sub-Menu */}
+              {item.children && (
+                <div className="dropdown-container">
+                  {item.children.map((child, cIdx) => (
+                    <Link 
+                      key={cIdx} 
+                      to={child.path} 
+                      className="dropdown-link"
+                      onClick={() => isMobileOpen && toggleMobile()}
+                    >
+                      {child.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {/* --- Right Section --- */}
+        <div className="nav-right">
+          {/* Action Buttons Group (Locked in One Row) */}
+          <div className="action-row">
+            <Link to="/login" className="login-btn">
+              <FaUserCircle className="btn-icon" /> <span>Login</span>
+            </Link>
+            <button className="book-btn">Book Now</button>
+          </div>
+
+          {/* Animated Hamburger (Mobile Only) */}
+          <div className={`burger-menu ${isMobileOpen ? 'open' : ''}`} onClick={toggleMobile}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
