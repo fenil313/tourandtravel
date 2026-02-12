@@ -2,6 +2,8 @@ import React, { createContext, useState, useContext } from 'react';
 
 const NavContext = createContext();
 
+
+
 export const NavProvider = ({ children }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,6 +16,8 @@ export const NavProvider = ({ children }) => {
       setWishlist([...wishlist, item]);
     }
   };
+
+  
 
   const menuData = [
     { title: 'Home', path: '/Home' },

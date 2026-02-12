@@ -1,8 +1,7 @@
 import React from 'react';
 import './About.css';
 
-// Importing your downloaded images
-// Replace these paths with your actual local file names
+// images
 import img1 from '../assets/travel-1.png';
 import img2 from '../assets/travel-2.png';
 import img3 from '../assets/travel-3.png';
@@ -15,7 +14,6 @@ const About = () => {
     <section className="about-section">
       <div className="about-wrapper">
         
-        {/* Left Side: The 4-Image Brutalist Grid */}
         <div className="about-grid">
           {travelImages.map((image, index) => (
             <div key={index} className="about-image-box">
