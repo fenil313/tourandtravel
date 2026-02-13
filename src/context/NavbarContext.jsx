@@ -34,8 +34,9 @@ export const NavProvider = ({ children }) => {
         { title: 'Heritage Sites', path: '/tours/heritage' }
       ]
     },
-    { title: 'Group Bookings', path: '/groups' },
-    { title: 'Reviews', path: '/reviews' }
+    { title: 'Reviews', path: '/reviews' },
+    { title: 'Contact', path: '/contact' },
+
   ];
 
   return (
