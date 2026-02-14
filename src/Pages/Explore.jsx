@@ -1,123 +1,89 @@
 import React, { useState, useEffect } from 'react';
-import { FaPlane, FaBus, FaTrain, FaHorseHead, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaCompass, FaChevronRight, FaChevronLeft, FaExpandAlt } from 'react-icons/fa';
 import './Explore.css';
 
-const destinations = [
-  {
-    id: 1,
-    place: "Eiffel Tower, Paris",
-    transport: "plane",
-    info: "The iron heart of France. An architectural masterpiece reaching for the Parisian clouds.",
-    images: [
-      "https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=1000",
-      "https://images.unsplash.com/photo-1431274172761-fca41d930114?q=80&w=1000"
-    ]
-  },
-  {
-    id: 2,
-    place: "Varanasi, India",
-    transport: "horse",
-    info: "The spiritual capital. Journey through ancient narrow lanes where history breathes.",
-    images: [
-      "https://images.unsplash.com/photo-1561361513-2d000a50f0dc?q=80&w=1000",
-      "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?q=80&w=1000"
-    ]
-  },
-  {
-    id: 3,
-    place: "Taj Mahal, Agra",
-    transport: "bus",
-    info: "A monument of love. Perfectly symmetrical marble that glows with the rising sun.",
-    images: [
-      "https://images.unsplash.com/photo-1564507592333-c60657ece523?q=80&w=1000",
-      "https://images.unsplash.com/photo-1548013146-72479768bbaa?q=80&w=1000"
-    ]
-  },
-  {
-    id: 4,
-    place: "Kashmir Valley",
-    transport: "train",
-    info: "Heaven on Earth. Snow-capped peaks and serene lakes that define tranquility.",
-    images: [
-      "https://images.unsplash.com/photo-1562692233-138374d6e19f?q=80&w=1000",
-      "https://images.unsplash.com/photo-1598305371124-42ad19712a42?q=80&w=1000"
-    ]
-  },
-  {
-    id: 5,
-    place: "Dubai Skyline",
-    transport: "plane",
-    info: "Where the future lives. A desert oasis of steel and glass touching the sky.",
-    images: [
-      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000",
-      "https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1000"
-    ]
-  },
-  {
-    id: 6,
-    place: "Old City Heritage",
-    transport: "horse",
-    info: "Explore the vintage roots of the city via traditional royal carriages.",
-    images: [
-      "https://images.unsplash.com/photo-1551882547-ff43c63fedfe?q=80&w=1000",
-      "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?q=80&w=1000"
-    ]
-  }
+// Using local assets as requested
+const travelData = [
+  { id: "01", city: "DUBAI", tag: "SKYLINE", color: "#FFD700", imgs: ["../assets/destinations/dubai1.jpg", "../assets/destinations/dubai2.jpg", "../assets/destinations/dubai3.jpg", "../assets/destinations/dubai4.jpg"] },
+  { id: "02", city: "LONDON", tag: "HERITAGE", color: "#0052ff", imgs: ["../assets/destinations/uk1.jpg", "../assets/destinations/uk2.jpg", "../assets/destinations/uk3.jpg", "../assets/destinations/uk4.jpg"] },
+  { id: "03", city: "PARIS", tag: "ROMANCE", color: "#ff2d55", imgs: ["../assets/destinations/paris1.jpg", "../assets/destinations/paris2.jpg", "../assets/destinations/paris3.jpg", "../assets/destinations/paris4.jpg"] },
+  { id: "04", city: "VARANASI", tag: "SPIRIT", color: "#ff8c00", imgs: ["../assets/destinations/vns1.jpg", "../assets/destinations/vns2.jpg", "../assets/destinations/vns3.jpg", "../assets/destinations/vns4.jpg"] }
 ];
 
 const Explore = () => {
-  const [index, setIndex] = useState(0);
+  const [active, setActive] = useState(0);
+  const [subSlide, setSubSlide] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setIndex((prev) => (prev === 0 ? 1 : 0));
-    }, 5000);
+      setSubSlide((prev) => (prev + 1) % 4);
+    }, 3500);
     return () => clearInterval(timer);
-  }, []);
+  }, [active]);
 
-  const getTransportIcon = (type) => {
-    if (type === "plane") return <FaPlane />;
-    if (type === "bus") return <FaBus />;
-    if (type === "train") return <FaTrain />;
-    if (type === "horse") return <FaHorseHead />;
-    return <FaPlane />;
+  const changeLocation = (direction) => {
+    if (direction === 'next') setActive((prev) => (prev + 1) % travelData.length);
+    else setActive((prev) => (prev === 0 ? travelData.length - 1 : prev - 1));
+    setSubSlide(0);
   };
 
+  const current = travelData[active];
+
   return (
-    <div className="explore-white-theme">
-      <header className="agency-title">
-        <h1 className="outline-h1">EXPLORE <span className="solid-h1">WORLD</span></h1>
-        <p>Your Journey, Our Craft</p>
-      </header>
+    <div className="horizon-root" style={{ '--accent': current.color }}>
+      {/* Background Text Distortion */}
+      <div className="bg-glitch-text">{current.city}</div>
 
-      <div className="box-grid">
-        {destinations.map((dest) => (
-          <div key={dest.id} className="button-89-box">
-            <div className="card-content">
-              {/* Image Morphing Box */}
-              <div className="image-stack">
-                {dest.images.map((img, i) => (
-                  <img 
-                    key={i}
-                    src={img} 
-                    alt={dest.place} 
-                    className={`morph-img ${i === index ? 'active' : ''}`}
-                  />
-                ))}
-              </div>
+      <div className="horizon-main">
+        {/* Left: Interactive Controls */}
+        <div className="side-nav">
+          <div className="nav-brand">UMIYA<span>.</span>EX</div>
+          <div className="nav-numbers">
+            {travelData.map((item, i) => (
+              <span key={item.id} className={i === active ? 'active' : ''} onClick={() => setActive(i)}>
+                {item.id}
+              </span>
+            ))}
+          </div>
+        </div>
 
-              {/* Text Information */}
-              <div className="info-area">
-                <div className="lino-icon-wrapper">
-                  {getTransportIcon(dest.transport)}
-                </div>
-                <span className="dest-label"><FaMapMarkerAlt /> {dest.place}</span>
-                <h3>{dest.place.split(',')[0]}</h3>
-                <p>{dest.info}</p>
-              </div>
+        {/* Center: The Experience Core */}
+        <div className="experience-core">
+          <div className="text-content">
+            <span className="location-chip"><FaCompass /> {current.tag}</span>
+            <h1 className="display-city">{current.city}</h1>
+            <div className="cta-group">
+              <button className="main-cta">START VOYAGE <FaExpandAlt /></button>
             </div>
           </div>
-        ))}
+
+          <div className="visual-stack">
+            {current.imgs.map((img, i) => (
+              <div 
+                key={i}
+                className={`depth-card card-${i} ${i === subSlide ? 'active' : ''}`}
+                style={{ backgroundImage: `url(${require(`../../assets/destinations/${img}`)})` }}
+              >
+                <div className="glass-reflection"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right: Navigation Arrows */}
+        <div className="flow-controls">
+          <button onClick={() => changeLocation('prev')}><FaChevronLeft /></button>
+          <div className="control-divider"></div>
+          <button onClick={() => changeLocation('next')}><FaChevronRight /></button>
+        </div>
+      </div>
+
+      {/* Bottom Status Bar */}
+      <div className="status-bar">
+        <div className="coord-data">LAT: 25.2048 | LONG: 55.2708</div>
+        <div className="progress-container">
+          <div className="progress-fill" style={{ width: `${((active + 1) / travelData.length) * 100}%` }}></div>
+        </div>
       </div>
     </div>
   );

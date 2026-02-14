@@ -85,10 +85,10 @@ const Home = () => {
                 for those who demand precision. Umiya is the bridge between 
                 rugged exploration and refined execution.
               </p>
-              <div className="stat-row">
+              {/* <div className="stat-row">
                 <div className="stat-card"><FaBolt /> <h4>Instant Sync</h4></div>
                 <div className="stat-card"><FaGlobe /> <h4>Global Reach</h4></div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'; // Added useNavigate
 import { FaUserCircle, FaChevronDown } from 'react-icons/fa';
 import { useNav } from '../context/NavbarContext';
 import './Navbar.css';
 
 const Navbar = () => {
   const { isMobileOpen, toggleMobile, menuData } = useNav();
+  const navigate = useNavigate(); // Initialize navigate
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
@@ -13,6 +14,12 @@ const Navbar = () => {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Handler for Book Now button
+  const handleBookClick = () => {
+    navigate('/book'); // Navigate to the book page
+    if (isMobileOpen) toggleMobile(); // Close mobile menu if open
+  };
 
   return (
     <nav className="navbar">
@@ -57,12 +64,15 @@ const Navbar = () => {
 
         {/* --- Right Section --- */}
         <div className="nav-right">
-          {/* Action Buttons Group (Locked in One Row) */}
           <div className="action-row">
-            <Link to="/login" className="login-btn">
+            <Link to="/login" className="login-btn" onClick={() => isMobileOpen && toggleMobile()}>
               <FaUserCircle className="btn-icon" /> <span>Login</span>
             </Link>
-            <button className="book-btn">Book Now</button>
+            
+            {/* Connected Book Now Button */}
+            <button className="book-btn" onClick={handleBookClick}>
+              Book Now
+            </button>
           </div>
 
           {/* Animated Hamburger (Mobile Only) */}

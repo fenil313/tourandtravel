@@ -2,8 +2,6 @@ import React, { createContext, useState, useContext } from 'react';
 
 const NavContext = createContext();
 
-
-
 export const NavProvider = ({ children }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,13 +15,9 @@ export const NavProvider = ({ children }) => {
     }
   };
 
-  
-
   const menuData = [
-    { title: 'Home', path: '/Home' },
-
-    { title: 'About', path: '/About' },
-
+    { title: 'Home', path: '/' }, // Changed to root to match App.jsx
+    { title: 'About', path: '/about' },
     { title: 'Explore', path: '/explore' },
     { 
       title: 'Destinations', 
@@ -34,9 +28,8 @@ export const NavProvider = ({ children }) => {
         { title: 'Heritage Sites', path: '/tours/heritage' }
       ]
     },
-    { title: 'Reviews', path: '/reviews' },
+    { title: 'Reviews', path: '/Reviews' }, // Matched App.jsx casing
     { title: 'Contact', path: '/contact' },
-
   ];
 
   return (
