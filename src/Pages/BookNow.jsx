@@ -1,148 +1,117 @@
-import React, { useState, useMemo } from 'react';
-import { useNav } from '../context/NavbarContext';
-import { FaUser, FaEnvelope, FaLock, FaUsers, FaMapMarkerAlt, FaTags, FaArrowRight } from 'react-icons/fa';
-import './BookNow.css';
+import React, { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { FaTrash, FaChevronLeft, FaShieldAlt, FaPlaneDeparture, FaCreditCard, FaSpinner } from 'react-icons/fa';
+import { removeFromCart } from '../store/destinationSlice';
+import '../styles/BookNow.css';
 
-const BookNow = () => {
-  const { menuData } = useNav();
-  const [step, setStep] = useState('form');
-  
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    from: '',
-    to: '',
-    adults: 1,
-    children: 0
-  });
+const Book = () => {
+  const { cartItems } = useSelector((state) => state.destinations);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  // Dynamic Destination Sync from Context
-  const registeredDestinations = useMemo(() => {
-    const destMenu = menuData.find(item => item.title === 'Destinations');
-    return destMenu ? destMenu.children.map(child => child.title) : ["Spiritual Tours", "Adventure Picks"];
-  }, [menuData]);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [guests, setGuests] = useState(1);
+  const [formData, setFormData] = useState({ fullName: '', email: '', phone: '', travelDate: '', address: '' });
 
-  // Pricing Logic with Group Discount
-  const pricing = useMemo(() => {
-    const basePrice = 5000; // Base per adult
-    const totalPeople = formData.adults + formData.children;
-    let subtotal = (formData.adults * basePrice) + (formData.children * (basePrice * 0.6));
-    
-    let discount = 0;
-    if (totalPeople >= 5) {
-      discount = subtotal * 0.15; // 15% Group Discount
+  // Calculation Logic: 30,000 + 2,000 = 32,000 style
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price, 0) * guests;
+  const taxAmount = Math.round((subtotal / 30000) * 2000); 
+  const grandTotal = subtotal + taxAmount;
+
+  const handleFakePayment = () => {
+    if (!formData.fullName || cartItems.length === 0) {
+      toast.error("Please provide your name and select a destination.");
+      return;
     }
-
-    return {
-      subtotal,
-      discount,
-      total: subtotal - discount,
-      isGroup: totalPeople >= 5
-    };
-  }, [formData.adults, formData.children]);
-
-  const handleBooking = (e) => {
-    e.preventDefault();
-    setStep('paying');
-    setTimeout(() => setStep('success'), 3000);
+    setIsProcessing(true);
+    setTimeout(() => {
+      const paymentId = "SK-TRV-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+      const bookingData = { ...formData, guests, subtotal, taxAmount, totalAmount: grandTotal, items: cartItems, paymentId };
+      
+      const history = JSON.parse(localStorage.getItem('userBookings') || '[]');
+      localStorage.setItem('userBookings', JSON.stringify([bookingData, ...history]));
+      
+      setIsProcessing(false);
+      toast.success("Payment Verified! Generating your ticket...");
+      navigate('/ticket', { state: bookingData });
+    }, 2500);
   };
 
-  if (step === 'success') {
-    return (
-      <div className="success-screen">
-        <div className="ticket-card animate-pop">
-          <div className="ticket-header">UMIYA VOYAGE CONFIRMED</div>
-          <div className="ticket-body">
-            <h3>{formData.fullName}</h3>
-            <p>{formData.from} ➔ {formData.to}</p>
-            <div className="divider"></div>
-            <p>Passengers: {formData.adults + formData.children}</p>
-            <h2>Total Paid: ₹{pricing.total}</h2>
-          </div>
-          <button className="brutal-btn" onClick={() => window.location.href='/'}>FINISH</button>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="booking-page">
-      <div className="booking-container">
-        {/* --- LEFT: REGISTRATION FORM --- */}
-        <form className="booking-form" onSubmit={handleBooking}>
-          <section className="form-section">
-            <h2 className="section-title"><FaUser /> IDENTITY</h2>
+    <div className="booking-wrapper">
+      <div className="booking-content">
+        <div className="left-panel">
+          <button className="back-link" onClick={() => navigate(-1)}><FaChevronLeft /> Back to Destinations</button>
+          <header className="form-header">
+            <h1>Confirm Your <span>Journey</span></h1>
+            <p>Fill in your details to finalize your travel documents.</p>
+          </header>
+
+          <section className="booking-form">
             <div className="input-row">
-              <input type="text" placeholder="Full Name" required className="brutal-input" 
-                onChange={(e) => setFormData({...formData, fullName: e.target.value})} />
-              <input type="email" placeholder="Email Address" required className="brutal-input" 
-                onChange={(e) => setFormData({...formData, email: e.target.value})} />
+              <div className="field">
+                <label>Full Name</label>
+                <input type="text" placeholder="e.g. Rahul Sharma" onChange={e => setFormData({...formData, fullName: e.target.value})} />
+              </div>
+              <div className="field">
+                <label>Phone Number</label>
+                <input type="tel" placeholder="+91 98XXX XXXXX" onChange={e => setFormData({...formData, phone: e.target.value})} />
+              </div>
             </div>
-            <input type="password" placeholder="Create Booking Password" required className="brutal-input" 
-              onChange={(e) => setFormData({...formData, password: e.target.value})} />
-          </section>
-
-          <section className="form-section">
-            <h2 className="section-title"><FaMapMarkerAlt /> ROUTE</h2>
+            <div className="field">
+              <label>Email Address</label>
+              <input type="email" placeholder="traveler@example.com" onChange={e => setFormData({...formData, email: e.target.value})} />
+            </div>
             <div className="input-row">
-              <input type="text" placeholder="From (City)" required className="brutal-input" 
-                onChange={(e) => setFormData({...formData, from: e.target.value})} />
-              <select className="brutal-input" required onChange={(e) => setFormData({...formData, to: e.target.value})}>
-                <option value="">Select Destination</option>
-                {registeredDestinations.map(dest => <option key={dest} value={dest}>{dest}</option>)}
-              </select>
-            </div>
-          </section>
-
-          <section className="form-section">
-            <h2 className="section-title"><FaUsers /> MANIFESTO (How many people?)</h2>
-            <div className="counter-row">
-              <div className="counter-box">
-                <label>Adults</label>
-                <input type="number" min="1" value={formData.adults} 
-                  onChange={(e) => setFormData({...formData, adults: parseInt(e.target.value)})}/>
+              <div className="field">
+                <label>Travel Date</label>
+                <input type="date" onChange={e => setFormData({...formData, travelDate: e.target.value})} />
               </div>
-              <div className="counter-box">
-                <label>Children</label>
-                <input type="number" min="0" value={formData.children} 
-                  onChange={(e) => setFormData({...formData, children: parseInt(e.target.value)})}/>
+              <div className="field">
+                <label>Travelers</label>
+                <div className="guest-pill">
+                    <button onClick={() => setGuests(Math.max(1, guests - 1))}>-</button>
+                    <span>{guests}</span>
+                    <button onClick={() => setGuests(guests + 1)}>+</button>
+                </div>
               </div>
             </div>
           </section>
-
-          <button type="submit" className="razorpay-trigger">
-            {step === 'paying' ? 'ENCRYPTING...' : `PAY ₹${pricing.total} VIA RAZORPAY`}
-          </button>
-        </form>
-
-        {/* --- RIGHT: LIVE RECEIPT --- */}
-        <div className="live-receipt">
-          <div className="receipt-head">
-            <h3>FARE SUMMARY</h3>
-          </div>
-          <div className="receipt-content">
-            <div className="receipt-line">
-              <span>Subtotal</span>
-              <span>₹{pricing.subtotal}</span>
-            </div>
-            {pricing.isGroup && (
-              <div className="receipt-line discount">
-                <span>Group Discount (15%)</span>
-                <span>-₹{pricing.discount}</span>
-              </div>
-            )}
-            <div className="receipt-total">
-              <span>TOTAL</span>
-              <span>₹{pricing.total}</span>
-            </div>
-            {pricing.isGroup && <p className="promo-text"><FaTags /> Group Special Applied!</p>}
-          </div>
-          <div className="receipt-barcode"></div>
         </div>
+
+        <aside className="right-panel">
+          <div className="glass-card summary-card">
+            <h3>Booking Summary</h3>
+            <div className="cart-preview">
+              {cartItems.map(item => (
+                <div key={item.id} className="preview-item">
+                  <img src={item.img || 'https://via.placeholder.com/50'} alt={item.title} />
+                  <div className="p-info">
+                    <h6>{item.title}</h6>
+                    <p>₹{item.price.toLocaleString()} / person</p>
+                  </div>
+                  <FaTrash className="del" onClick={() => dispatch(removeFromCart(item.id))} />
+                </div>
+              ))}
+            </div>
+
+            <div className="price-breakdown">
+              <div className="p-row"><span>Base Fare</span><span>₹{subtotal.toLocaleString()}</span></div>
+              <div className="p-row"><span>Taxes & GST</span><span>+ ₹{taxAmount.toLocaleString()}</span></div>
+              <div className="p-row grand"><span>Total Amount</span><span>₹{grandTotal.toLocaleString()}</span></div>
+            </div>
+
+            <button className={`checkout-btn ${isProcessing ? 'loading' : ''}`} onClick={handleFakePayment} disabled={isProcessing}>
+              {isProcessing ? <FaSpinner className="spin" /> : <><FaCreditCard /> Secure Checkout</>}
+            </button>
+            <span className="ssl-text"><FaShieldAlt /> Secure Sandbox Payment</span>
+          </div>
+        </aside>
       </div>
     </div>
   );
 };
 
-export default BookNow;
+export default Book;

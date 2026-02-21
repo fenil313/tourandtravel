@@ -1,100 +1,130 @@
 import React from 'react';
-import { 
-  FaGlobe, 
-  FaUsers, 
-  FaSuitcaseRolling, 
-  FaArrowRight, 
-  FaPhoneAlt,
-  FaCheckCircle 
-} from 'react-icons/fa';
-import './About.css';
+import { FaUsers, FaSuitcaseRolling, FaGlobe, FaCertificate, FaShieldAlt, FaArrowRight } from 'react-icons/fa';
+import '../styles/About.css';
 
-// Asset Imports
+// Importing your specific assets
 import mainTravel from '../assets/travel-2.png';
 import subTravel from '../assets/travel-1.png';
-import carriageSticker from '../assets/carriage.svg'; 
 
 const AboutUs = () => {
   return (
-    <section className="about-section">
-      <div className="brutal-container">
+    <div className="dest-master-wrapper">
+      {/* 1. NAVBAR OVERLAP FIX */}
+      <div className="nav-safe-gap"></div>
+
+      <div className="dest-layout-grid">
         
-        {/* TOP ROW */}
-        <div className="about-header-row">
-          <div className="ink-tag">ESTABLISHED 2026</div>
-          <h1 className="brutal-title">
-            Umiya Trvels <span className="orange-text">JOURNEYS</span>
-          </h1>
-        </div>
-
-        <div className="about-main-grid">
-          
-          {/* LEFT: VISUAL COMPOSITION WITH OVERLAPPING CARRIAGE */}
-          <div className="about-visuals">
-            <div className="gravity-frame-main">
-              <img src={mainTravel} alt="Umiya Main" className="arch-img" />
-              
-              {/* THE CARRIAGE STICKER - Repositioned near images */}
-              <div className="carriage-sticker-overlap">
-                <img src={carriageSticker} alt="Heritage Carriage" />
-                <span className="sticker-label">HERITAGE MODE</span>
-              </div>
-
-              <div className="gravity-frame-sub">
-                <img src={subTravel} alt="Umiya Sub" className="sub-img" />
-                <div className="ink-sticker-badge">GLOBAL OPS</div>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: EXPANDED TEXT & FEATURES */}
-          <div className="about-content">
-            <h2 className="content-subheading">THE UMIYA PHILOSOPHY</h2>
-            <p className="lead-text">
-              For over two decades, <strong>Umiya Travels</strong> has been the silent engine behind 
-              thousands of global explorations. We don't just facilitate movement; we curate 
-              high-contrast experiences that bridge the gap between ancient heritage and modern luxury.
-            </p>
-
-            <div className="expanded-story">
-              <p>
-                From our humble beginnings in 1998, we have evolved into a neubrutalist force in the 
-                travel industry—stripping away the fluff to provide <strong>bold, transparent, and reliable</strong> 
-                services. Whether it's a 100-member corporate retreat or a solo expedition to the 
-                unknown, our logistics are built on an ironclad foundation of precision.
-              </p>
-              
-              <ul className="bullet-list">
-                <li><FaCheckCircle className="check-icon" /> 24/7 Global Ground Coordination</li>
-                <li><FaCheckCircle className="check-icon" /> Exclusive Access to Heritage Sites</li>
-                <li><FaCheckCircle className="check-icon" /> Transparent Pricing with Zero Hidden Fees</li>
-              </ul>
-            </div>
-
-            <div className="feat-grid">
-              <div className="feat-card-tilt">
-                <FaUsers className="feat-icon" />
-                <h3>Mass Movement</h3>
-                <p>Specialized logistics for large scale group bookings.</p>
-              </div>
-              <div className="feat-card-tilt">
-                <FaSuitcaseRolling className="feat-icon" />
-                <h3>Bespoke Kit</h3>
-                <p>Personalized itineraries designed for the bold.</p>
-              </div>
-            </div>
-
-            <div className="about-cta-row">
-              {/* <button className="brutal-btn-primary">
-                START YOUR STORY <FaArrowRight />
-              </button> */}
-              
+        {/* --- SIDEBAR: MISSION REGISTRY --- */}
+        <aside className="dest-sidebar-nav">
+          <div className="sidebar-sticky-inner">
+            <h2 className="brand-title">Our <span>Legacy</span></h2>
             
+            <div className="filter-group">
+              <div className="stat-box-brutal">EST. 2026</div>
+            </div>
+
+            <div className="category-stack">
+              <div className="about-sidebar-item">
+                <FaCertificate className="sidebar-icon" />
+                <div className="sidebar-text-block">
+                  <label>CERTIFIED</label>
+                  <p>Global Logistics Standard ISO-9001</p>
+                </div>
+              </div>
+              <div className="about-sidebar-item">
+                <FaShieldAlt className="sidebar-icon" />
+                <div className="sidebar-text-block">
+                  <label>SECURED</label>
+                  <p>End-to-end encrypted travel coordination.</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="filter-group" style={{marginTop: '30px'}}>
+              <label>GLOBAL REACH</label>
+              <div className="custom-range-slider-mock">
+                 <div className="slider-fill" style={{width: '85%'}}></div>
+              </div>
+              <div className="range-labels">
+                 <span>LOCAL</span>
+                 <span>85% GLOBAL</span>
+              </div>
             </div>
           </div>
-        </div>
+        </aside>
+
+        {/* --- MAIN CONTENT AREA --- */}
+        <main className="dest-main-view">
+          
+          {/* HEADER BOX */}
+          <header className="dest-view-header">
+            <div className="header-info-box">
+              <h1>The Umiya <span>Travels</span></h1>
+            </div>
+           
+          </header>
+
+          {/* LARGE HERO SECTION */}
+          <section className="dest-card-box hero-card-spacing">
+            <div className="card-media-wrapper hero-image-height">
+              <img src={mainTravel} alt="Umiya Journey" />
+              <div className="card-price-overlay">SINCE 1998</div>
+            </div>
+            <div className="card-content-wrapper">
+              <span className="card-category-text">Our Core Story</span>
+              <h2 className="card-title-text" style={{fontSize: '2.5rem', lineHeight: '1.1'}}>
+                Redefining the architecture of modern exploration.
+              </h2>
+              <p className="card-desc-text">
+                Umiya Travels doesn't just book tickets; we engineer journeys. Born from a vision to 
+                strip away the clutter of traditional travel agencies, we adopted a <strong>Brutalist 
+                Approach</strong>—focusing on raw reliability, transparent pricing, and structural 
+                integrity in every itinerary we build. Whether it's a corporate retreat or a solo 
+                expedition, our logistics are built on an ironclad foundation.
+              </p>
+            </div>
+          </section>
+
+          {/* 3-COLUMN FEATURE GRID */}
+          <div className="dest-images-grid">
+            
+            {/* Feature 1 */}
+            <article className="dest-card-box">
+              <div className="card-content-wrapper">
+                <FaUsers className="about-feat-icon" />
+                <span className="card-category-text">Collective</span>
+                <h3 className="card-title-text">Mass Movement</h3>
+                <p className="card-desc-text">Specialized logistics for large-scale corporate groups and heritage tours with zero friction.</p>
+                <button className="card-book-btn">READ PROTOCOL <FaArrowRight /></button>
+              </div>
+            </article>
+
+            {/* Feature 2 */}
+            <article className="dest-card-box">
+              <div className="card-content-wrapper">
+                <FaSuitcaseRolling className="about-feat-icon" />
+                <span className="card-category-text">Precision</span>
+                <h3 className="card-title-text">Bespoke Kit</h3>
+                <p className="card-desc-text">Tailored travel hardware and itineraries designed for the most demanding global explorers.</p>
+                <button className="card-book-btn">READ PROTOCOL <FaArrowRight /></button>
+              </div>
+            </article>
+
+            {/* Feature 3 */}
+            <article className="dest-card-box">
+              <div className="card-content-wrapper">
+                <FaGlobe className="about-feat-icon" />
+                <span className="card-category-text">Network</span>
+                <h3 className="card-title-text">Global Ops</h3>
+                <p className="card-desc-text">24/7 ground coordination across 45+ territories with an ironclad foundation of precision.</p>
+                <button className="card-book-btn">READ PROTOCOL <FaArrowRight /></button>
+              </div>
+            </article>
+
+          </div>
+        </main>
       </div>
-    </section>
+    </div>
   );
 };
 

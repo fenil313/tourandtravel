@@ -1,0 +1,169 @@
+.ticket-page-container {
+  min-height: 100vh;
+  background: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+.ticket-controls {
+  margin-bottom: 30px;
+  display: flex;
+  gap: 15px;
+}
+
+.ticket-controls button {
+  padding: 12px 25px;
+  border: none;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-print { background: #1a1a1a; color: white; }
+.btn-home { background: white; border: 1px solid #ddd; color: #1a1a1a; }
+
+/* THE DOCUMENT */
+.boarding-pass-document {
+  display: flex;
+  width: 100%;
+  max-width: 950px;
+  background: white;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.pass-body {
+  flex: 2.5;
+  padding: 50px;
+  position: relative;
+}
+
+.pass-stub {
+  flex: 1;
+  background: #fafafa;
+  border-left: 2px dashed #e0e0e0;
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pass-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50px;
+}
+
+.pass-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+}
+
+.pass-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #b08d57;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pass-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+
+.info-item label {
+  display: block;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: #888;
+  margin-bottom: 5px;
+}
+
+.info-item p {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1rem;
+}
+
+.itinerary-summary h4 {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.itinerary-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+/* STUB STYLES */
+.stub-header { text-align: center; margin-bottom: 30px; }
+.stub-header strong { letter-spacing: 3px; font-size: 1.2rem; }
+
+.s-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.total-highlight {
+  margin-top: 20px;
+  padding: 20px 0;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+.total-highlight h2 { font-size: 1.8rem; color: #1a1a1a; margin-top: 5px; }
+
+.stub-barcode {
+  text-align: center;
+  opacity: 0.7;
+}
+
+.barcode-img { font-size: 3.5rem; width: 100%; }
+.stub-barcode code { font-size: 0.6rem; display: block; margin-top: 5px; }
+
+/* WATERMARK */
+.watermark-stamp {
+  position: absolute;
+  bottom: -20px;
+  right: 20px;
+  font-size: 10rem;
+  color: rgba(0,0,0,0.03);
+  transform: rotate(-15deg);
+}
+
+/* PRINT LOGIC */
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; }
+  .ticket-page-container { padding: 0; }
+  .boarding-pass-document { box-shadow: none; border: 1px solid #000; }
+}
+
+@media (max-width: 768px) {
+  .boarding-pass-document { flex-direction: column; }
+  .pass-stub { border-left: none; border-top: 2px dashed #e0e0e0; }
+}

@@ -1,132 +1,86 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useReviews } from '../context/ReviewContext';
+import { useDestinations } from '../context/DestinationContext'; 
 import { useNavigate } from 'react-router-dom';
-import { updateForm, setPaymentSuccess } from '../redux/contactSlice';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { FaPaypal, FaPaperPlane, FaLock } from 'react-icons/fa';
-import './Contact.css';
+import { FaPaperPlane, FaStamp, FaUserAlt, FaMapMarkedAlt, FaStar, FaPenNib } from 'react-icons/fa';
+import '../styles/Contact.css';
 
 const Contact = () => {
-  const dispatch = useDispatch();
+  const { addReview } = useReviews();
+  const { destinations } = useDestinations(); 
   const navigate = useNavigate();
-  const { formData, isPaid } = useSelector((state) => state.contact);
   
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [status, setStatus] = useState("ISSUE DOCUMENT");
+  const [rating, setRating] = useState(5);
+  const [form, setForm] = useState({ name: '', horizon: '', message: '' });
 
-  // Handle Input Changes
-  const handleChange = (e) => {
-    dispatch(updateForm({ [e.target.name]: e.target.value }));
-  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setStatus("STAMPING...");
 
-  // Simulated PayPal Payment Logic
-  const handlePaypalPayment = () => {
-    if (!formData.name || !formData.email) {
-      toast.error("Please fill contact details first!");
-      return;
-    }
-    
-    setIsProcessing(true);
-    
-    // Simulating PayPal API delay
+    const newReview = {
+      id: Date.now(),
+      name: form.name,
+      trip: form.horizon,
+      comment: form.message,
+      rating: rating,
+      date: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase(),
+    };
+
     setTimeout(() => {
-      dispatch(setPaymentSuccess());
-      setIsProcessing(false);
-    }, 2000);
+      addReview(newReview);
+      setStatus("VALIDATED");
+      setTimeout(() => navigate('/reviews'), 1000);
+    }, 1500);
   };
-
-  // UseEffect to trigger Toastify after Payment success
-  useEffect(() => {
-    if (isPaid) {
-      toast.success("Payment Received! Umiya Travels is on the way.", {
-        position: "top-right",
-        autoClose: 3000,
-        theme: "dark",
-      });
-      
-      // Navigate to home after delay
-      setTimeout(() => navigate('/'), 4000);
-    }
-  }, [isPaid, navigate]);
 
   return (
-    <div className="contact-page">
-      <ToastContainer />
-      
-      <div className="brutal-contact-card">
-        <div className="contact-header">
-          <h1 className="brutal-title">GET IN <span className="orange-text">TOUCH</span></h1>
-          <p>Book your premium consultation via PayPal below.</p>
-        </div>
+    <div className="contact-premium-root">
+      <div className="registry-card">
+        <header className="registry-header">
+          <div className="header-text">
+            <h2> CONTACT<span>  US</span></h2>
+          </div>
+          <FaStamp className="stamp-seal" />
+        </header>
 
-        <div className="contact-grid">
-          {/* Form Section */}
-          <div className="form-section">
-            <div className="input-group">
-              <label>FULL NAME</label>
-              <input 
-                type="text" 
-                name="name" 
-                placeholder="Ex: Rajesh Mehta" 
-                value={formData.name}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-group">
-              <label>EMAIL ADDRESS</label>
-              <input 
-                type="email" 
-                name="email" 
-                placeholder="rajesh@example.com"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="input-group">
-              <label>MESSAGE</label>
-              <textarea 
-                name="message" 
-                rows="4" 
-                placeholder="Tell us about your dream trip..."
-                value={formData.message}
-                onChange={handleChange}
-              ></textarea>
+        <form className="registry-form" onSubmit={handleSubmit}>
+          <div className="input-group">
+            <label><FaUserAlt /> PASSENGER NAME</label>
+            <input 
+              type="text" required placeholder="Enter Legal Name"
+              onChange={(e) => setForm({...form, name: e.target.value})} 
+            />
+          </div>
+
+          <div className="input-group">
+            <label><FaMapMarkedAlt /> DESTINATION VISITED</label>
+            <select required defaultValue="" onChange={(e) => setForm({...form, horizon: e.target.value})}>
+              <option value="" disabled>Select Location</option>
+              {destinations.map((loc) => (
+                <option key={loc.id} value={loc.name}>{loc.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="rating-area">
+            <label>RATING</label>
+            <div className="stars-row">
+              {[1,2,3,4,5].map((s) => (
+                <FaStar key={s} className={rating >= s ? "gold-star" : "grey-star"} onClick={() => setRating(s)} />
+              ))}
             </div>
           </div>
 
-          {/* Payment Section */}
-          <div className="payment-section">
-            <div className="paypal-demo-box">
-              <div className="paypal-header">
-                <FaPaypal className="paypal-logo" />
-                <span>Express Checkout</span>
-              </div>
-              
-              <div className="payment-details">
-                <div className="price-row">
-                  <span>Consultation Fee</span>
-                  <span>$49.00</span>
-                </div>
-                <div className="price-row total">
-                  <span>Total Due</span>
-                  <span>$49.00</span>
-                </div>
-              </div>
-
-              <button 
-                className={`paypal-btn ${isPaid ? 'paid' : ''}`}
-                onClick={handlePaypalPayment}
-                disabled={isProcessing || isPaid}
-              >
-                {isProcessing ? "CONNECTING..." : isPaid ? "PAYMENT SUCCESSFUL" : "PAY WITH PAYPAL"}
-              </button>
-              
-              <p className="security-text">
-                <FaLock /> Secured by PayPal Encrypted Systems
-              </p>
-            </div>
+          <div className="input-group">
+            <label><FaPenNib /> YOUR  NARRATIVE</label>
+            <textarea required placeholder="Log your experience..." onChange={(e) => setForm({...form, message: e.target.value})} />
           </div>
-        </div>
+
+          <button type="submit" className="submit-auth-btn">
+            {status} <FaPaperPlane />
+          </button>
+        </form>
       </div>
     </div>
   );

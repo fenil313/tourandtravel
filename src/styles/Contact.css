@@ -1,0 +1,180 @@
+/* --- CONTACT PREMIUM ROOT --- */
+.contact-premium-root {
+  min-height: 100vh;
+  background-color: #f4f4f4; /* Slightly off-white to look like parchment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 60px;
+  font-family: 'Inter', sans-serif;
+  background-image: radial-gradient(#d1d1d1 0.5px, transparent 0.5px);
+  background-size: 30px 30px; /* Subtle grid pattern like technical paper */
+}
+
+/* --- THE REGISTRY CARD --- */
+.registry-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 650px;
+  padding: 60px;
+  box-shadow: 20px 20px 0px rgba(0, 0, 0, 0.05); /* Brutalist shadow */
+  border: 1px solid #e0e0e0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative border for that "Official Document" feel */
+.registry-card::before {
+  content: '';
+  position: absolute;
+  top: 10px; left: 10px; right: 10px; bottom: 10px;
+  border: 1px solid #f0f0f0;
+  pointer-events: none;
+}
+
+/* --- HEADER SECTION --- */
+.registry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 50px;
+  border-bottom: 2px solid #1a1a1a;
+  padding-bottom: 20px;
+}
+
+.serial-no {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  color: #757575;
+  letter-spacing: 2px;
+}
+
+.registry-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  margin-top: 5px;
+}
+
+.registry-header h2 span {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: #b08d57;
+}
+
+.stamp-seal {
+  font-size: 3.5rem;
+  color: rgba(176, 141, 87, 0.2); /* Faded stamp look */
+  transform: rotate(-15deg);
+}
+
+/* --- FORM ELEMENTS --- */
+.registry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 1.5px;
+}
+
+.input-group input, 
+.input-group select, 
+.input-group textarea {
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  background: #fafafa;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus, 
+.input-group select:focus, 
+.input-group textarea:focus {
+  border-color: #b08d57;
+  background: #fff;
+}
+
+.input-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* --- RATING AREA --- */
+.rating-area {
+  padding: 20px;
+  background: #fcfcfc;
+  border: 1px dashed #e0e0e0;
+  text-align: center;
+}
+
+.rating-area label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  display: block;
+  color: #757575;
+}
+
+.stars-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.2rem;
+}
+
+.gold-star { color: #b08d57; cursor: pointer; }
+.grey-star { color: #e0e0e0; cursor: pointer; transition: 0.3s; }
+.grey-star:hover { color: #d4af37; }
+
+/* --- SUBMIT BUTTON --- */
+.submit-auth-btn {
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 20px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 700;
+  letter-spacing: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 10px;
+}
+
+.submit-auth-btn:hover {
+  background: #b08d57;
+  letter-spacing: 5px; /* Editorial expansion effect */
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 600px) {
+  .registry-card {
+    padding: 30px;
+  }
+  
+  .registry-header h2 {
+    font-size: 1.5rem;
+  }
+}

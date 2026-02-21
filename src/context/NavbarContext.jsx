@@ -1,42 +1,54 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const NavContext = createContext();
 
 export const NavProvider = ({ children }) => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [wishlist, setWishlist] = useState([]); 
+  const [authMode, setAuthMode] = useState('login');
+  const [user, setUser] = useState(null); // Tracks logged-in user
+
+  // Check login status on initial load
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user_record');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
   const toggleMobile = () => setIsMobileOpen((prev) => !prev);
-  
-  const addToWishlist = (item) => {
-    if (!wishlist.find(i => i.id === item.id)) {
-      setWishlist([...wishlist, item]);
-    }
+  const closeMobile = () => setIsMobileOpen(false);
+
+  const openAuth = (mode) => {
+    setAuthMode(mode);
+    closeMobile();
   };
 
+  // --- LOGOUT LOGIC ---
+  const logout = () => {
+    localStorage.removeItem('user_record'); // Clear data
+    setUser(null); // Reset state
+    closeMobile();
+    window.location.href = "/"; // Redirect to home
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = isMobileOpen ? 'hidden' : 'unset';
+  }, [isMobileOpen]);
+
   const menuData = [
-    { title: 'Home', path: '/' }, // Changed to root to match App.jsx
+    { title: 'Home', path: '/' },
     { title: 'About', path: '/about' },
     { title: 'Explore', path: '/explore' },
-    { 
-      title: 'Destinations', 
-      path: '/destinations',
-      children: [
-        { title: 'Spiritual Tours', path: '/tours/spiritual' },
-        { title: 'Adventure Picks', path: '/tours/adventure' },
-        { title: 'Heritage Sites', path: '/tours/heritage' }
-      ]
-    },
-    { title: 'Reviews', path: '/Reviews' }, // Matched App.jsx casing
+    { title: 'Destinations', path: '/destinations' },
+    { title: 'Reviews', path: '/reviews' }, 
     { title: 'Contact', path: '/contact' },
   ];
 
   return (
     <NavContext.Provider value={{ 
-      isMobileOpen, toggleMobile, menuData, 
-      searchQuery, setSearchQuery, 
-      wishlist, setWishlist, addToWishlist 
+      isMobileOpen, toggleMobile, closeMobile, menuData, 
+      authMode, setAuthMode, openAuth,
+      user, setUser, logout // Exporting user and logout
     }}>
       {children}
     </NavContext.Provider>

@@ -1,0 +1,191 @@
+/* --- Overlay & Modal --- */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85); /* Deep dark backdrop */
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+}
+
+.login-modal-card {
+  background: white;
+  width: 100%;
+  max-width: 1000px;
+  height: 600px;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+  animation: modalFadeUp 0.5s ease-out;
+}
+
+@keyframes modalFadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Split Layout --- */
+.login-split-container {
+  display: flex;
+  height: 100%;
+}
+
+.login-visual-panel {
+  flex: 1.2;
+  position: relative;
+  background: #111;
+  display: none; /* Hidden on mobile */
+}
+
+@media (min-width: 768px) {
+  .login-visual-panel { display: block; }
+}
+
+.login-visual-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.8;
+}
+
+.visual-overlay {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  color: white;
+}
+
+.archive-code {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  border-left: 2px solid #fff;
+  padding-left: 15px;
+}
+
+/* --- Form Panel --- */
+.login-form-panel {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: #fff;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  color: #111;
+  transition: transform 0.3s ease;
+}
+
+.modal-close-btn:hover { transform: rotate(90deg); }
+
+.login-title {
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.login-title span {
+  font-style: italic;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.login-subtitle {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 35px;
+  line-height: 1.5;
+}
+
+/* --- Form Elements --- */
+.login-minimal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.newsletter-input-row {
+  width: 100%;
+  padding: 15px 0;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.newsletter-input-row:focus {
+  border-bottom: 1px solid #111;
+}
+
+.join-btn-action {
+  background: #111;
+  color: white;
+  border: none;
+  padding: 18px;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-top: 15px;
+  transition: background 0.3s ease;
+}
+
+.join-btn-action:hover {
+  background: #333;
+}
+
+.form-footer-links {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.text-link {
+  color: #111;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Social Icons --- */
+.social-links-top {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.social-icon {
+  font-size: 1.2rem;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.social-icon:hover {
+  color: #111;
+}

@@ -1,76 +1,67 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  FaInstagram, FaFacebookF, FaTwitter, 
-  FaYoutube, FaArrowRight, FaMapMarkerAlt, 
-  FaEnvelope, FaPhoneAlt 
-} from 'react-icons/fa';
-import './Footer.css';
+import { useNavigate } from 'react-router-dom';
+import { FaInstagram, FaFacebookF, FaTwitter, FaChevronUp } from 'react-icons/fa';
+import logo from '../assets/logo.png'; 
+import '../styles/Footer.css';
 
 const Footer = () => {
+  const navigate = useNavigate();
+
+  const handleNav = (path) => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    navigate(path);
+  };
+
   return (
-    <footer className="footer-container">
-      {/* --- Top Section: Newsletter --- */}
-      <div className="footer-newsletter">
-        <div className="newsletter-content">
-          <h2>GET 20% OFF YOUR <br /> <span className="text-orange">FIRST ADVENTURE</span></h2>
-          <div className="newsletter-input-group">
-            <input type="email" placeholder="Your email address" />
-            <button className="button-54">JOIN THE CLUB <FaArrowRight /></button>
+    <footer className="footer-boutique">
+      <div className="footer-container">
+        <div className="footer-main-grid">
+          
+          {/* BRAND COLUMN */}
+          <div className="footer-col brand-col">
+            <div className="f-logo-group" onClick={() => handleNav('/')}>
+              {/* This div acts as the logo container */}
+              <div className="f-logo-icon">
+                <img src={logo} alt="Umiya" />
+              </div>
+              <span className="f-logo-text">UMIYA TRAVELS</span>
+            </div>
+            <p className="f-description">
+              Luxury heritage and bespoke travel experiences since 1998.
+            </p>
+          </div>
+
+          <div className="footer-col">
+            <h4 className="f-heading">Explore</h4>
+            <ul className="f-line-list">
+              <li onClick={() => handleNav('/about')}>Our Story</li>
+              <li onClick={() => handleNav('/explore')}>Expeditions</li>
+              <li onClick={() => handleNav('/destinations')}>Destinations</li>
+              <li onClick={() => handleNav('/reviews')}>Reviews</li>
+              <li onClick={() => handleNav('/contact')}>Contact Us</li>
+
+
+            </ul>
+          </div>
+
+          <div className="footer-col">
+            <h4 className="f-heading">Office</h4>
+            <ul className="f-line-list no-hover">
+              <li>Ahmedabad, Gujarat</li>
+              <li>+91 90163 79828</li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* --- Middle Section: Links & Info --- */}
-      <div className="footer-main">
-        <div className="footer-brand">
-          <Link to="/" className="footer-logo">
-            UMIYA <span className="text-orange">TRAVELS</span>
-          </Link>
-          <p>
-            Redefining exploration since 1998. We don't just book trips; 
-            we craft memories that last a lifetime across the globe.
-          </p>
-          <div className="social-links">
+        <div className="footer-bottom">
+          <span className="f-copyright">© 2026 UMIYA TRAVELS</span>
+          <div className="f-social-icons">
             <a href="#"><FaInstagram /></a>
             <a href="#"><FaFacebookF /></a>
-            <a href="#"><FaTwitter /></a>
-            <a href="#"><FaYoutube /></a>
           </div>
-        </div>
-
-        <div className="footer-links-grid">
-          <div className="footer-col">
-            <h3>QUICK LINKS</h3>
-            <Link to="/">Home</Link>
-            <Link to="/about">About Us</Link>
-            <Link to="/explore">Explore Tours</Link>
-            <Link to="#">Our Gallery</Link>
-          </div>
-
-          <div className="footer-col">
-            <h3>SUPPORT</h3>
-            <Link to="#">Contact Us</Link>
-            <Link to="#">Terms of Service</Link>
-            <Link to="#">Privacy Policy</Link>
-            <Link to="#">Refund Policy</Link>
-          </div>
-
-          <div className="footer-col contact-col">
-            <h3>CONTACT</h3>
-            <p><FaMapMarkerAlt className="text-orange" /> Ahmedabad, Gujarat, India</p>
-            <p><FaPhoneAlt className="text-orange" /> +91 98765 43210</p>
-            <p><FaEnvelope className="text-orange" /> hello@umiyatravels.com</p>
-          </div>
-        </div>
-      </div>
-
-      {/* --- Bottom Section: Copyright --- */}
-      <div className="footer-bottom">
-        <p>&copy; 2026 Umiya Travels. Built for Explorers.</p>
-        <div className="bottom-links">
-          <span>Sitemap</span>
-          <span>Security</span>
+          <button className="f-up-btn" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
+            <FaChevronUp />
+          </button>
         </div>
       </div>
     </footer>

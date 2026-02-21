@@ -1,0 +1,236 @@
+/* --- GLOBAL THEME SYNC --- */
+:root {
+  --ink-black: #1a1a1a;
+  --travel-gold: #b08d57;
+  --parchment: #fcfcfc;
+  --border-weight: 3px;
+  --brutal-shadow: 12px 12px 0px var(--ink-black);
+}
+
+/* --- WRAPPER & LAYOUT --- */
+.dest-master-wrapper {
+  background: var(--parchment);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-safe-gap {
+  height: 90px;
+}
+
+.dest-layout-grid {
+  display: flex;
+  max-width: 1500px;
+  margin: 0 auto;
+  gap: 40px;
+  padding: 40px;
+  width: 100%;
+}
+
+/* --- SIDEBAR: MISSION REGISTRY --- */
+.dest-sidebar-nav {
+  flex: 0 0 320px;
+}
+
+.sidebar-sticky-inner {
+  background: #fff;
+  border: var(--border-weight) solid var(--ink-black);
+  padding: 40px;
+  position: sticky;
+  top: 110px;
+  box-shadow: var(--brutal-shadow);
+}
+
+.brand-title { 
+  font-size: 2.2rem; 
+  font-weight: 900; 
+  margin-bottom: 35px; 
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--ink-black);
+}
+
+.brand-title span { 
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--travel-gold); 
+  text-transform: capitalize;
+}
+
+/* SIDEBAR COMPONENTS */
+.stat-box-brutal {
+  background: var(--ink-black);
+  color: #fff;
+  padding: 15px;
+  font-family: 'Space Mono', monospace;
+  font-weight: 900;
+  text-align: center;
+  margin-top: 10px;
+  letter-spacing: 2px;
+}
+
+.about-sidebar-item {
+  display: flex;
+  gap: 15px;
+  padding: 20px 0;
+  border-bottom: 1px solid #eee;
+  align-items: center;
+}
+
+.sidebar-icon {
+  font-size: 1.4rem;
+  color: var(--travel-gold);
+}
+
+.sidebar-text-block label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: #888;
+  display: block;
+}
+
+.sidebar-text-block p {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink-black);
+  margin: 0;
+}
+
+/* --- MAIN VIEW AREA --- */
+.dest-main-view {
+  flex: 1;
+}
+
+.dest-view-header {
+  background: #fff; 
+  border: var(--border-weight) solid var(--ink-black); 
+  padding: 30px 45px;
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+  margin-bottom: 40px; 
+  box-shadow: var(--brutal-shadow);
+}
+
+.header-info-box h1 { 
+  font-size: 3.2rem; 
+  line-height: 1; 
+  font-weight: 900;
+}
+
+.header-info-box h1 span { 
+  font-family: 'Playfair Display', serif; 
+  font-style: italic; 
+  color: var(--travel-gold); 
+  font-weight: 400;
+}
+
+/* --- HERO CARD --- */
+.hero-card-spacing {
+  margin-bottom: 40px;
+}
+
+.hero-image-height {
+  height: 480px !important;
+}
+
+/* --- 3-COLUMN FEATURE GRID --- */
+.dest-images-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 35px;
+}
+
+.dest-card-box {
+  background: #fff;
+  border: var(--border-weight) solid var(--ink-black);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dest-card-box:hover { 
+  transform: translate(-8px, -8px); 
+  box-shadow: 12px 12px 0px var(--travel-gold); 
+}
+
+/* CARD CONTENT */
+.card-content-wrapper {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.about-feat-icon {
+  font-size: 2.8rem;
+  color: var(--travel-gold);
+  margin-bottom: 25px;
+}
+
+.card-category-text { 
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem; 
+  font-weight: 900; 
+  color: var(--travel-gold); 
+  text-transform: uppercase; 
+  letter-spacing: 2px;
+}
+
+.card-title-text { 
+  font-size: 1.6rem; 
+  margin: 15px 0; 
+  font-weight: 900; 
+  line-height: 1.2;
+}
+
+.card-desc-text { 
+  font-size: 0.95rem; 
+  color: #555; 
+  line-height: 1.7; 
+  margin-bottom: 25px; 
+}
+
+.card-book-btn {
+  margin-top: auto;
+  background: var(--ink-black); 
+  color: #fff; 
+  padding: 18px; 
+  border: none; 
+  font-family: 'Space Mono', monospace;
+  font-weight: 900; 
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: 0.3s;
+}
+
+.card-book-btn:hover {
+  background: var(--travel-gold);
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 1200px) {
+  .dest-images-grid { grid-template-columns: repeat(2, 1fr); }
+  .dest-sidebar-nav { flex: 0 0 280px; }
+}
+
+@media (max-width: 950px) {
+  .dest-layout-grid { flex-direction: column; padding: 20px; }
+  .dest-sidebar-nav { width: 100%; }
+  .sidebar-sticky-inner { position: static; box-shadow: 8px 8px 0px var(--ink-black); }
+  .dest-images-grid { grid-template-columns: 1fr; }
+  .header-info-box h1 { font-size: 2.5rem; }
+  .hero-image-height { height: 300px !important; }
+}
+
+@media (max-width: 600px) {
+  .card-title-text { font-size: 1.4rem; }
+  .header-info-box h1 { font-size: 2rem; }
+}
