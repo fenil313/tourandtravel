@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaInstagram, FaFacebookF, FaTwitter, FaChevronUp } from 'react-icons/fa';
+import { FaInstagram, FaFacebookF, FaChevronUp } from 'react-icons/fa';
 import logo from '../assets/logo.png'; 
 import '../styles/Footer.css';
 

@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { FaSearch, FaChevronRight, FaChevronLeft, FaMapMarkerAlt, FaFilter } from 'react-icons/fa';
+import { FaSearch, FaChevronRight, FaChevronLeft, FaFilter } from 'react-icons/fa';
 import { addToCart } from '../store/destinationSlice';
 import { useDestinations } from '../context/DestinationContext';
 import '../styles/Destinations.css';

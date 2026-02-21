@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FaTrash, FaChevronLeft, FaShieldAlt, FaPlaneDeparture, FaCreditCard, FaSpinner } from 'react-icons/fa';
+import { FaTrash, FaChevronLeft, FaShieldAlt, FaCreditCard, FaSpinner } from 'react-icons/fa';
 import { removeFromCart } from '../store/destinationSlice';
 import '../styles/BookNow.css';
 

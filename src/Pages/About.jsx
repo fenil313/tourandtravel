@@ -4,7 +4,6 @@ import '../styles/About.css';
 
 // Importing your specific assets
 import mainTravel from '../assets/travel-2.png';
-import subTravel from '../assets/travel-1.png';
 
 const AboutUs = () => {
   return (
